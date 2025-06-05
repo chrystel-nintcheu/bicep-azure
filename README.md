@@ -28,14 +28,18 @@ Installs the Bicep CLI via az bicep install.
 
 **3. Add Your Bicep Files**
 > Place your `.bicep` files in the repo. For example:
-
-```resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
-  name: 'mystorageacct'
-  location: resourceGroup().location
+```
+resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
+  name: 'mystorageaccount'
+  location: 'eastus'
   sku: {
     name: 'Standard_LRS'
   }
   kind: 'StorageV2'
+  properties: {
+    accessTier: 'Hot'
+    supportsHttpsTrafficOnly: true
+  }
 }
 ```
 
@@ -43,18 +47,50 @@ Installs the Bicep CLI via az bicep install.
 - Go to your repo on GitHub.
 - Click the green "**Code**" button → "**Codespaces**" → "**Create codespace on main**".
 
-**5. Validate Bicep**
+**5. (Optional) Validate Bicep**
 Once inside the Codespace terminal, you can run:
 
 ```
-az bicep build --file main.bicep
+az bicep build --file <votre-fichier>.bicep
 
 ```
 
 **6. Deploy your resource**
 ```
 az login
-az deployment group create --resource-group <your-rg> --template-file main.bicep
+az group create --location <region> --resource-group <your-rg>
+az deployment group create --resource-group <your-rg> --template-file <votre-fichier>.bicep --verbose
+```
 
-> Visual studio extension
+**7. Destroy you resource**
+
+Comment the instruction inside `<votre-fichier>.bicep` then, save it
+
+```
+// resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
+//   name: 'mystorageaccount'
+//   location: 'eastus'
+//   sku: {
+//     name: 'Standard_LRS'
+//   }
+//   kind: 'StorageV2'
+//   properties: {
+//     accessTier: 'Hot'
+//     supportsHttpsTrafficOnly: true
+//   }
+// }
+
+```
+
+Then, deploy the file again with the command:
+
+```
+az deployment group create \
+  --resource-group <your-rg> \
+  --template-file <votre-fichier>.bicep \
+  --mode Complete
+  --verbose
+```
+
+Visual studio extension: 
 https://marketplace.visualstudio.com/
