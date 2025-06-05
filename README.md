@@ -56,3 +56,5 @@ az bicep build --file main.bicep
 az login
 az deployment group create --resource-group <your-rg> --template-file main.bicep
 
+> Visual studio extension
+https://marketplace.visualstudio.com/
