@@ -62,7 +62,7 @@ az group create --location <region> --resource-group <your-rg>
 az deployment group create --resource-group <your-rg> --template-file <votre-fichier>.bicep --verbose
 ```
 
-**7. Destroy you resource**
+**7. Destroy your resource**
 
 Comment the instruction inside `<votre-fichier>.bicep` then, save it
 
