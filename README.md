@@ -1,4 +1,4 @@
-# How to create a Bicep Dev Container in GitHub Codespaces
+# How to run a Bicep Dev Container in GitHub Codespaces
 > You can run Bicep in a GitHub Codespace, and it's a great way to work with infrastructure-as-code in a cloud-based development environment. Here's how you can set it up
 
 **1. Create a GitHub Repository**
@@ -55,10 +55,17 @@ az bicep build --file <votre-fichier>.bicep
 
 ```
 
-**6. Deploy your resource**
+**6. Deploy your resource**`
+Create a resource group in Azure to deploy your Bicep file. You can do this using the Azure CLI in the Codespace terminal:
+
 ```
 az login
 az group create --location <region> --resource-group <your-rg>
+```
+Depending on your region, you can use `eastus`, `westus`, `westeurope`, etc.
+Then, deploy your Bicep file using the command:
+
+```
 az deployment group create --resource-group <your-rg> --template-file <votre-fichier>.bicep --verbose
 ```
 
@@ -91,6 +98,11 @@ az deployment group create \
   --mode Complete
   --verbose
 ```
+
+**8. Destroy your resource group**
+```
+az group delete --resource-group <your-rg> --yes --no-wait
+``
 
 Visual studio extension: 
 https://marketplace.visualstudio.com/
