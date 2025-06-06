@@ -106,3 +106,6 @@ az group delete --resource-group <your-rg> --yes --no-wait
 
 Visual studio extension: 
 https://marketplace.visualstudio.com/
+
+> **NOTE: ** When your deployment failed, use the paramater az cli `--debug`
+
