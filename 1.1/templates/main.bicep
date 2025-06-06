@@ -1,5 +1,6 @@
 
 //var namePrefix = 'toy'
+/*
 param location string = resourceGroup().location
 param storageAccountName string = 'toystorage${uniqueString(resourceGroup().id)}'
 param appServiceAppName string = 'toyapp${uniqueString(resourceGroup().id)}'
@@ -42,3 +43,4 @@ resource appServiceApp 'Microsoft.Web/sites@2024-04-01' = {
     httpsOnly: true
   }
 }
+*/
