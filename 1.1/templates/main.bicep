@@ -1,6 +1,6 @@
 
 //var namePrefix = 'toy'
-/*
+
 param location string = resourceGroup().location
 param storageAccountName string = 'toystorage${uniqueString(resourceGroup().id)}'
 param appServiceAppName string = 'toyapp${uniqueString(resourceGroup().id)}'
@@ -11,9 +11,9 @@ param appServiceAppName string = 'toyapp${uniqueString(resourceGroup().id)}'
 ])
 param environmentType string
 
-var appServicePlanName = 'toy-product-launch-plan'
+//var appServicePlanName = 'toy-product-launch-plan'
 var storageAccountSkuName = (environmentType == 'prod') ? 'Standard_GRS' : 'Standard_LRS'
-var appServicePlanSkuName = (environmentType == 'prod') ? 'P2v3' : 'F1'
+//var appServicePlanSkuName = (environmentType == 'prod') ? 'P2v3' : 'F1'
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: storageAccountName
@@ -27,6 +27,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   }
 }
 
+/*
 resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = {
   name: appServicePlanName
   location: location
@@ -44,3 +45,12 @@ resource appServiceApp 'Microsoft.Web/sites@2024-04-01' = {
   }
 }
 */
+
+module appService 'modules/appService.bicep' = {
+  name: 'appService'
+  params: {
+    location: location
+    appServiceAppName: appServiceAppName
+    environmentType: environmentType
+  }
+}
