@@ -26,3 +26,6 @@ resource appServiceApp 'Microsoft.Web/sites@2024-04-01' = {
     httpsOnly: true
   }
 }
+
+output appServiceAppHostName string = appServiceApp.properties.defaultHostName
+output appServiceAppDnsServer string = appServiceApp.properties.dnsConfiguration.dnsServers[0]
