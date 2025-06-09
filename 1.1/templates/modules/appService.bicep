@@ -7,7 +7,8 @@ param appServiceAppName string
 ])
 param environmentType string
 
-var appServicePlanName = 'toy-product-launch-plan'
+//var appServicePlanName = 'toy-product-launch-plan'
+var appServicePlanName = 'toysrv${uniqueString(resourceGroup().id)}'
 var appServicePlanSkuName = (environmentType == 'prod') ? 'P2v3' : 'F1'
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = {
@@ -28,4 +29,3 @@ resource appServiceApp 'Microsoft.Web/sites@2024-04-01' = {
 }
 
 output appServiceAppHostName string = appServiceApp.properties.defaultHostName
-output appServiceAppDnsServer string = appServiceApp.properties.dnsConfiguration.dnsServers[0]

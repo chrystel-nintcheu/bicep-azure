@@ -1,7 +1,7 @@
 
-//var namePrefix = 'toy'
+
 param location string = resourceGroup().location
-param storageAccountName string = 'toystorage${uniqueString(resourceGroup().id)}'
+param storageAccountName string = 'toyvdi${uniqueString(resourceGroup().id)}'
 param appServiceAppName string = 'toyapp${uniqueString(resourceGroup().id)}'
 
 @allowed([
@@ -33,6 +33,24 @@ module appService 'modules/appService.bicep' = {
   }
 }
 
+/*
+module appPublicIPModule 'modules/appPublicIP.bicep' = {
+  name: 'appPublicIPModule'
+  params: {
+    customName : 'publicIP-${appServiceAppName}'
+    location: location
+    appServiceAppName: appServiceAppName
+  }
+}
+
+*/
+
+
+
 output appServiceAppHostName string = appService.outputs.appServiceAppHostName
-output appServiceAppDnsServer string = appService.outputs.appServiceAppDnsServer
+//output ipAddress string = appPublicIPModule.outputs.ipAddress
+//output fqdn string = appPublicIPModule.outputs.fqdn
+
+
+
 
