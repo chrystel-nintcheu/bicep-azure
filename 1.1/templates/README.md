@@ -2,7 +2,7 @@
 ```
 az deployment group create --name main --template-file main.bicep --parameters environmentType=nonprod
 ```
-> Be sure you already have set the default resourceGroup. Otherwise:
+> Be sure you had setted the default resourceGroup previously. Otherwise:
 
 ```
 az configure --defaults group="<your-rg>"
