@@ -17,7 +17,11 @@
 ```
 az deployment group create --resource-group <your-rg> --name main --template-file main.bicep --parameters main.parameters.dev.json
 ```
+# How to list of subscriptions 
 
+```
+az account list --output table
+```
 # How to create a new resource group
 
 ```
@@ -27,8 +31,6 @@ az group create --name <your-rg-name> --location <az-region> --subscription <you
 
 ```
 australiacentral,australiaeast,australiasoutheast,brazilsouth,canadacentral,canadaeast,centralindia,centralus,eastasia,eastus2,eastus,francecentral,germanywestcentral,japaneast,japanwest,jioindiawest,koreacentral,koreasouth,northcentralus,northeurope,norwayeast,southafricanorth,southcentralus,southindia,southeastasia,swedencentral,switzerlandnorth,uaenorth,uksouth,ukwest,westcentralus,westeurope,westindia,westus2,westus3,westus,qatarcentral,israelcentral,polandcentral,italynorth,spaincentral,mexicocentral,chilecentral,malaysiawest,newzealandnorth,indonesiacentral,australiacentral2.
-
-```
 
 
 
