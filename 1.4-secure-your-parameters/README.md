@@ -13,6 +13,25 @@ az keyvault secret set --vault-name $keyVaultName --name "sqlServerAdministrator
 az keyvault secret set --vault-name $keyVaultName --name "sqlServerAdministratorPassword" --value $password --output none
 
 ```
+> If you get the error below. 
+**Forbidden) Caller is not authorized to perform action on resource.**
+You need to assign permission to your keyvault
+
+## Give your user account permissions to manage secrets in Key Vault
+To gain permissions to your key vault through [Role-Based Access Control (RBAC)](https://learn.microsoft.com/en-us/azure/key-vault/general/rbac-guide?tabs=azure-cli), assign a role to your "User Principal Name" (UPN) using the Azure CLI command az role assignment create.
+
+##H HOW to assign permission ?
+
+```
+az role assignment create --role "Key Vault Secrets Officer" --assignee "<upn>" --scope "/subscriptions/<subscription-id>/resourceGroups/<resource-group-name>/providers/Microsoft.KeyVault/vaults/<your-unique-keyvault-name>"
+```
+**EXEMPLE**
+```
+az role assignment create --role "Key Vault Secrets Officer" --assignee "chrystel.nintcheu@polymtl.ca" --scope "/subscriptions/f84c5e5b-f6b0-4ca9-870b-dc05c4117623/resourceGroups/rg-canadacentral-p109903/providers/Microsoft.KeyVault/vaults/keyVault-p109903"
+```
+
+
+
 
 ### Deploy
 
@@ -20,4 +39,12 @@ az keyvault secret set --vault-name $keyVaultName --name "sqlServerAdministrator
 az deployment group create --resource-group <your-rg> --name main --template-file main.bicep --parameters main.parameters.dev.json
 ```
 
+## KEY Address
 
+"id": "/subscriptions/f84c5e5b-f6b0-4ca9-870b-dc05c4117623/resourceGroups/rg-canadacentral-p109903/providers/Microsoft.KeyVault/vaults/keyVault-p109903
+upn : chrystel.nintcheu@polymtl.ca
+
+# Get the key vault's ressource ID
+```
+az keyvault show --name $KeyVaultName --resource-group <your-rg> --query id --output tsv
+```
