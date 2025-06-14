@@ -13,6 +13,22 @@
         "name": "Standard",
         "tier": "Standard"
       }
+    },
+    "sqlServerAdministratorLogin": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/<id>/resourceGroups/<your-rg>/providers/Microsoft.KeyVault/vaults/<your-keyVaultName>"
+        },
+        "secretName": "sqlServerAdministratorLogin"
+      }
+    },
+    "sqlServerAdministratorPassword": {
+      "reference": {
+        "keyVault": {
+          "id": "/subscriptions/<id>/resourceGroups/<your-rg>/providers/Microsoft.KeyVault/vaults/<your-keyVaultName>"
+        },
+        "secretName": "sqlServerAdministratorPassword"
+      }
     }
   }
 }
