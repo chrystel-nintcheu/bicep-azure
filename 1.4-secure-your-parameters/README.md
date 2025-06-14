@@ -25,25 +25,16 @@ To gain permissions to your key vault through [Role-Based Access Control (RBAC)]
 ```
 az role assignment create --role "Key Vault Secrets Officer" --assignee "<upn>" --scope "/subscriptions/<subscription-id>/resourceGroups/<resource-group-name>/providers/Microsoft.KeyVault/vaults/<your-unique-keyvault-name>"
 ```
-**EXEMPLE**
+# Get the key vault's ressource ID
 ```
-az role assignment create --role "Key Vault Secrets Officer" --assignee "chrystel.nintcheu@polymtl.ca" --scope "/subscriptions/f84c5e5b-f6b0-4ca9-870b-dc05c4117623/resourceGroups/rg-canadacentral-p109903/providers/Microsoft.KeyVault/vaults/keyVault-p109903"
+az keyvault show --name $KeyVaultName --resource-group <your-rg> --query id --output tsv
 ```
+
 
 # Deploy
 
 ```
 az deployment group create --resource-group <your-rg> --name main --template-file main.bicep --parameters main.parameters.dev.json
-```
-
-## KEY Address
-
-"id": "/subscriptions/f84c5e5b-f6b0-4ca9-870b-dc05c4117623/resourceGroups/rg-canadacentral-p109903/providers/Microsoft.KeyVault/vaults/keyVault-p109903
-upn : chrystel.nintcheu@polymtl.ca
-
-# Get the key vault's ressource ID
-```
-az keyvault show --name $KeyVaultName --resource-group <your-rg> --query id --output tsv
 ```
 
 
