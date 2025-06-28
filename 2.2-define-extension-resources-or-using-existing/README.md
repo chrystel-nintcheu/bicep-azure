@@ -12,6 +12,10 @@ az monitor log-analytics workspace create --workspace-name ToyLogs --location ea
 storageaccountYYYYMMdd
 ```
 
+# Destroy
+```
+az deployment group create --name destroy-main --template-file destroy.bicep --mode Complete
+```
 
 
 [source](https://learn.microsoft.com/en-us/training/modules/child-extension-bicep-templates/7-exercise-deploy-extension-existing-resources?pivots=cli)
