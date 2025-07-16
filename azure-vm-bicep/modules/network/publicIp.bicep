@@ -1,14 +1,11 @@
 @description('Nom de l’IP publique')
-param publicIpName string = 'myPublicIp-${uniqueString(resourceGroup().id)}'
+param publicIpName string = 'publicIp-${uniqueString(resourceGroup().id)}'
 
 resource publicIp 'Microsoft.Network/publicIPAddresses@2023-09-01' = {
   name: publicIpName
   location: resourceGroup().location
   properties: {
     publicIPAllocationMethod: 'Dynamic'
-    sku: {
-      name: 'Basic'
-    }
   }
 }
 

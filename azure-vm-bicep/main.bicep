@@ -1,109 +1,40 @@
+param location string = resourceGroup().location
+param sshPublicKey string
+param adminUsername string = 'azureuser'
+param allowedSshIp string // à adapter selon ton IP publique
 
-@description('Nom de la VM')
-param vmName string = 'secureLinuxVM'
+param sequence string = uniqueString(resourceGroup().id)
 
-@description('IP adresse de la session codespace en cours')
-param codespacePublicIP string
-
-@description('Nom d’utilisateur administrateur')
-param adminUsername string
-
-@description('Type d’authentification (clé SSH recommandée)')
-@allowed([
-  'sshPublicKey'
-  'password'
-])
-param authenticationType string = 'sshPublicKey'
-
-@description('Clé SSH publique ou mot de passe')
-@secure()
-param adminPasswordOrKey string
-
-@description('Version Ubuntu')
-@allowed([
-  'Ubuntu-2004'
-  'Ubuntu-2204'
-])
-param ubuntuOSVersion string = 'Ubuntu-2204'
-
-@description('Type de sécurité de la VM')
-@allowed([
-  'Standard'
-  'TrustedLaunch'
-])
-param securityType string = 'TrustedLaunch'
-
-var imageReference = {
-  'Ubuntu-2204': {
-    publisher: 'Canonical'
-    offer: '0001-com-ubuntu-server-jammy'
-    sku: '22_04-lts-gen2'
-    version: 'latest'
+module network './modules/network/network.bicep' = {
+  name: 'network-${sequence}'
+  params: {
+    sshAllowedIp: allowedSshIp
   }
 }
 
-var linuxConfiguration = {
-  disablePasswordAuthentication: true
-  ssh: {
-    publicKeys: [
-      {
-        path: '/home/${adminUsername}/.ssh/authorized_keys'
-        keyData: adminPasswordOrKey
-      }
-    ]
+module publicIp './modules/network/publicIp.bicep' = {
+  name: 'publicIp-${sequence}'
+  params: {
+    publicIpName: 'vmPublicIP-${sequence}'
   }
 }
 
-resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2023-09-01' = {
-  name: '${vmName}-nsg'
-  location: resourceGroup().location
-  properties: {
-    securityRules: [
-      {
-        name: 'Allow-SSH'
-        properties: {
-          priority: 1000
-          protocol: 'Tcp'
-          access: 'Allow'
-          direction: 'Inbound'
-          sourceAddressPrefix: '${codespacePublicIP}' // Remplacez par votre IP ou range sécurisé
-          sourcePortRange: '*'
-          destinationAddressPrefix: '*'
-          destinationPortRange: '22'
-        }
-      }
-    ]
+module nic './modules/nic/nic.bicep' = {
+  name: 'nic-${sequence}'
+  params: {
+    nicName: 'vmNic-${sequence}'
+    subnetId: network.outputs.subnetId
+    nsgId: network.outputs.nsgId
+    publicIpId: publicIp.outputs.publicIpId
   }
 }
 
-resource vm 'Microsoft.Compute/virtualMachines@2023-09-01' = {
-  name: vmName
-  location: resourceGroup().location
-  properties: {
-    hardwareProfile: { vmSize: 'Standard_D2s_v3' }
-    storageProfile: {
-      osDisk: {
-        createOption: 'FromImage'
-        managedDisk: { storageAccountType: 'Standard_LRS' }
-      }
-      imageReference: imageReference[ubuntuOSVersion]
-    }
-    osProfile: {
-      computerName: vmName
-      adminUsername: adminUsername
-      linuxConfiguration: linuxConfiguration
-    }
-    securityProfile: (securityType == 'TrustedLaunch') ? {
-      uefiSettings: {
-        secureBootEnabled: true
-        vTpmEnabled: true
-      }
-      securityType: securityType
-    } : null
-    networkProfile: {
-      networkInterfaces: [
-        // Ajoutez ici la ressource d’interface réseau liée au NSG
-      ]
-    }
+module vm './modules/compute/vm.bicep' = {
+  name: 'vm-${sequence}'
+  params: {
+    vmName: 'secureLnxVm-${sequence}'
+    adminUsername: adminUsername
+    sshPublicKey: sshPublicKey
+    nicId: nic.outputs.nicId
   }
 }
