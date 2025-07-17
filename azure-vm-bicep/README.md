@@ -15,8 +15,6 @@ az bicep upgrade
 ssh-keygen -t rsa -b 4096 -C "votre_email@example.com"
 ```
 
-ssh-keygen -t rsa -b 4096 -C "chrystel.nintcheu@polymtl.ca"
-
 puis, identifier l'emplacement
 
 ```
