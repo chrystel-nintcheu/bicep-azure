@@ -1,13 +1,13 @@
 # Création d'une VM Linux dans Azure depuis GitHub Codespaces
 
 Le fichier de lancement est `main.bicep`.
-[Az cli references](https://aka.ms/cli_ref)
 
 ## 1. Mettre à jour l'environnement bicep codespaces
 
 ```
 az bicep upgrade
 ```
+[Az cli references](https://aka.ms/cli_ref)
 
 ## 2. Créer votre pair de clés dans codespaces
 
@@ -38,14 +38,15 @@ curl https://ifconfig.me
 
 
 ## 4. Créer un ressource groupe
-[doc az group](https://learn.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az_group_create)
-[Identifier la liste des regions supportées par votre abonnement] (https://learn.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-list-locations)
+[documenation az group](https://learn.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az_group_create)
+
+[liste des regions supportées](https://learn.microsoft.com/en-us/cli/azure/account?view=azure-cli-latest#az-account-list-locations)
 ```
 az account list-locations --output table
 ```
 ### 4.1 Créer votre rg dans la région de votre choix
 
-> Exemple de region : canadacentral (Toronto), canadaeast (Québec)
+Exemple de region : **canadacentral** (Toronto), **canadaeast** (Québec)
 
 ```
 az group create --name rg-<azregion>-<sequence> --location <azregion> --debug
@@ -58,6 +59,7 @@ az group list --output table
 ```
 
 ## 5. Déployer la VM
+
 ### 5.1 - Déploiement - option 1 (Recommandé)
 
 ```
@@ -69,6 +71,8 @@ az deployment group create \
 ```
 
 ### 5.2 - Déploiement - option 2
+
+Assurez-vous de renseigner les tous paramètres présents dans le fichier `parameters.json`
 
 ```
 az deployment group create \
@@ -91,13 +95,17 @@ L'usager de la VM est celui du `<adminUsername>`
 ```
 
 
-# 7. Détruire les ressources (important)
+## 7. Détruire les ressources (important)
 
-## Supprimer la VM et les ressources associées
+### Supprimer la VM et les ressources associées
+```
 az deployment group create --resource-group <ton_rg>  --template-file destroy.bicep --mode Complete --debug
+```
 
-## Supprimer le rg
+### Supprimer le rg
+```
 az group delete <ton_rg>
+```
 
 ### Approche plus drastique
 Supprime le rg et toutes les VMs associées en une fois
