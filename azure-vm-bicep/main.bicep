@@ -1,28 +1,46 @@
+@description('Recupere la region du ressource groupe')
 param location string = resourceGroup().location
-param sshPublicKey string
-param adminUsername string = 'azureuser'
-param allowedSshIp string // à adapter selon ton IP publique
 
+@description('Sequence unique du deploiement')
 param sequence string = uniqueString(resourceGroup().id)
 
+@description('Cle public de la vm source du deploiement')
+param sshPublicKey string
+
+@description('Defaut userlogin de la vm destination')
+param adminUsername string = 'azureuser'
+
+@description('IP public de la vm source du deploiement')
+param allowedSshIp string // à adapter selon ton IP publique
+
+@description('Préfixe par defaut d’adresse du VNet')
+param vnetAddressPrefix string
+
+@description('Préfixe par default plage addresse subnet')
+param subnetPrefix string
+
 module network './modules/network/network.bicep' = {
-  name: 'network-${sequence}'
+  name: 'network'
   params: {
     sshAllowedIp: allowedSshIp
+    vnetName:'net-${sequence}'
+    vnetAddressPrefix: vnetAddressPrefix
+    subnetPrefix:subnetPrefix
   }
 }
 
 module publicIp './modules/network/publicIp.bicep' = {
-  name: 'publicIp-${sequence}'
+  name: 'publicIp'
   params: {
-    publicIpName: 'vmPublicIP-${sequence}'
+    publicIpName: 'vmIP-${sequence}'
+    dnsLabel: 'vmdns${sequence}'
   }
 }
 
 module nic './modules/nic/nic.bicep' = {
-  name: 'nic-${sequence}'
+  name: 'nic'
   params: {
-    nicName: 'vmNic-${sequence}'
+    nicName: 'nic-${sequence}'
     subnetId: network.outputs.subnetId
     nsgId: network.outputs.nsgId
     publicIpId: publicIp.outputs.publicIpId
@@ -30,11 +48,14 @@ module nic './modules/nic/nic.bicep' = {
 }
 
 module vm './modules/compute/vm.bicep' = {
-  name: 'vm-${sequence}'
+  name: 'vm'
   params: {
-    vmName: 'secureLnxVm-${sequence}'
+    vmName: 'host${sequence}'
     adminUsername: adminUsername
     sshPublicKey: sshPublicKey
     nicId: nic.outputs.nicId
   }
 }
+
+output vmPublicFqdn string = publicIp.outputs.publicFqdn
+output vmNetName string = nic.outputs.nicName

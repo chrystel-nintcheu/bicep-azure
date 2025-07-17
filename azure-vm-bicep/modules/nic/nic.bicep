@@ -1,5 +1,5 @@
 @description('Nom de l’interface réseau')
-param nicName string = 'nic-${uniqueString(resourceGroup().id)}'
+param nicName string = 'niclabel'
 
 @description('ID du subnet')
 param subnetId string

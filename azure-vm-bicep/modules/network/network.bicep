@@ -1,17 +1,20 @@
 @description('Nom du réseau virtual (VNet)')
-param vnetName string = 'myVNet-${uniqueString(resourceGroup().id)}'
+param vnetName string = 'vnetlabel'
 
-@description('Préfixe d’adresse du VNet')
-param vnetAddressPrefix string = '10.0.0.0/16'
+@description('Préfixe par defaut plage addresse VNet')
+//param vnetAddressPrefix string = '10.0.0.0/16'
+param vnetAddressPrefix string
+
+@description('Préfixe par default plage addresse subnet')
+//param subnetPrefix string = '10.0.0.0/24'
+param subnetPrefix string
 
 @description('Nom du subnet')
-param subnetName string = 'default'
+param subnetName string = 'subnetlabel'
 
-@description('Préfixe du subnet')
-param subnetPrefix string = '10.0.0.0/24'
 
-@description('Nom du NSG')
-param nsgName string = '${vnetName}-nsg'
+@description('Nom du network security group (NSG)')
+param nsgName string = 'nsg${vnetName}'
 
 @description('Adresse IP autorisée pour le SSH')
 param sshAllowedIp string
@@ -24,9 +27,9 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-09-01' = {
   properties: {
     securityRules: [
       {
-        name: 'AllowSSH'
+        name: 'Allow-SSH'
         properties: {
-          priority: 1000
+          priority: 1001
           direction: 'Inbound'
           access: 'Allow'
           protocol: 'Tcp'
@@ -40,13 +43,13 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-09-01' = {
         name: 'Allow-HTTP'
         properties: {
           priority: 1002
-          direction: 'Inbound'
-          access: 'Allow'
           protocol: 'Tcp'
+          access: 'Allow'
+          direction: 'Inbound'
           sourceAddressPrefix: '*'
           sourcePortRange: '*'
           destinationAddressPrefix: '*'
-          destinationPortRange: '80'
+          destinationPortRanges: ['80', '443']
         }
       }
     ]
@@ -78,4 +81,3 @@ output vnetId string = vnet.id
 output subnetId string = vnet.properties.subnets[0].id
 output nsgId string = nsg.id
 output vnetName string = vnet.name
-

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "canadacentral"
+    },
+    "adminUsername": {
+      "value": "teacher"
+    },
+    "sshPublicKey": {
+      "value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCmp55FBKF+GS/l+y77zfs/p3u6/Wc+60O4PUekoQ+/arhXAZRZQOt7atodwEd2jYMZpVw0/tqLMoF6DO4a3Kl88e/OdN8LioULRiMTY2i2Ip6WTAwGB1mNBAy53I+c/3eiFP2qNjvYGXeGoOoZdM/Y9220Hkw6iBaB8Y9bVz/QVOqnSlX3N8TLzJ/utTcMQsRUadXxaf/8O/EBuVOzg3jtsI3uu5MS420ik3eStVk2FN86w3BJAnwo7XQfhT3K4ul61UXYDeviTuzHCOD/zuT1s+uTm7yQdRMM9Qx1Rah7MRiJ54tdTONgG3gjZ7MbOflWXyL7wXR4o7Ygqa+p65wF1gOeAzsWZAd+3x6TSZPaOXrl47aFcmHYpU0BxMyPcsmCBSPTH5m1tOulmisRHn1ehpjd+Az9UWapJiIuAPjO7HtMmaFj6JmTy40e14XllUQFQsNYWnu0sV07sAXZ1NSIJazlkV4QDgy9NNBcZZGuzs/qCgCj4g6ERor/XNXpE6yqinLtnpZBSt42OBD/KMAEdQuv4CjjU/sTDW3+QnTwmSBAgK6H2vBRNTQxCc4p3SZnWQfJHjyvhT6EVfyldawUa4dEJm4t6TaVdJkSLBH0CaTuu56niJfCCN4Np2qmM5IggkCO0SIUOxGOgvuaFHU7+WKJWxNz720hATiJ/yM2Iw=="
+    },
+    "allowedSshIp": {
+      "value": "20.42.11.21"
+    },
+    "vnetAddressPrefix":{
+        "value": "10.0.0.0/16"
+    },
+    "subnetPrefix":{
+        "value": "10.0.0.0/24"
+    }
+  }
+}

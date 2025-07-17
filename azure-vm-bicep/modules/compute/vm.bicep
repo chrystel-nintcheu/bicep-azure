@@ -1,8 +1,17 @@
-param vmName string = 'vmLnx-${uniqueString(resourceGroup().id)}'
+@description('Sequence unique par defaut de la ressource')
+param sequence string = uniqueString(resourceGroup().id)
+
+
+@description('valeur du hostname')
+param vmName string = 'host${sequence}'
+
+@description('Le nom utilisateur de la vm')
 param adminUsername string
 
 @secure()
 param sshPublicKey string
+
+@description('Network interface Id')
 param nicId string
 
 resource vm 'Microsoft.Compute/virtualMachines@2023-09-01' = {
