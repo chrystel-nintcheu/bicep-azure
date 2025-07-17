@@ -23,7 +23,7 @@ module network './modules/network/network.bicep' = {
   name: 'network'
   params: {
     sshAllowedIp: allowedSshIp
-    vnetName:'net-${sequence}'
+    vnetName:'vNet-${sequence}'
     vnetAddressPrefix: vnetAddressPrefix
     subnetPrefix:subnetPrefix
   }

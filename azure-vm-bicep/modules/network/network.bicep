@@ -49,7 +49,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2023-09-01' = {
           sourceAddressPrefix: '*'
           sourcePortRange: '*'
           destinationAddressPrefix: '*'
-          destinationPortRanges: ['80', '443']
+          destinationPortRanges: ['80', '443', '8080', '8443']
         }
       }
     ]
