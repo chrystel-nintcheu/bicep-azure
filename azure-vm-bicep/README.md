@@ -104,7 +104,7 @@ az deployment group create --resource-group <ton_rg>  --template-file destroy.bi
 
 ### Supprimer le rg
 ```
-az group delete <ton_rg>
+az group delete --resource-group <ton_rg>
 ```
 
 ### Approche plus drastique
