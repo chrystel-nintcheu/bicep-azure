@@ -1,8 +1,12 @@
 {
   "name": "Bicep Dev Container",
-  "image": "mcr.microsoft.com/devcontainers/dotnet:7.0",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
   "features": {
-    "ghcr.io/devcontainers/features/azure-cli:1": {}
+    "ghcr.io/devcontainers/features/azure-cli:1": {
+      "installBicep": true
+    }
   },
    "customizations": {
         "vscode": {
@@ -10,9 +14,12 @@
                 "ms-azuretools.vscode-bicep",
                 "ms-vscode.azurecli",
                 "ms-azuretools.vscode-azureresourcegroups",
-                "ms-codespaces-tools.ado-codespaces-auth"
+                "ms-codespaces-tools.ado-codespaces-auth",
+                "ms-azuretools.vscode-containers",
+                "redhat.ansible",
+                "ms-python.python"
             ]
         }
     },
-  "postCreateCommand": "az bicep install"
+  "postCreateCommand": "./.devcontainer/postCreate.sh"
 }
