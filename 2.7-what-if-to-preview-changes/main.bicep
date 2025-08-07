@@ -5,7 +5,6 @@ resource vnet 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   location: location
   tags: {
     CostCenter: '12345'
-    Owner: 'Team A'
   }
   properties: {
     addressSpace: {
