@@ -39,3 +39,9 @@ az configure --defaults group="{your resource group name}"
 ```
 az deployment group what-if --template-file main.bicep
 ```
+
+# Apply confirm-with-what-if command to avoid big mistake in production
+
+```
+az deployment group create --name main --mode Complete --confirm-with-what-if --template-file main.bicep
+```
