@@ -1,4 +1,4 @@
-param location string = resourceGroup().location
+/* param location string = resourceGroup().location
 
 resource vnet 'Microsoft.Network/virtualNetworks@2024-05-01' = {
   name: 'vnet-001'
@@ -24,3 +24,4 @@ resource vnet 'Microsoft.Network/virtualNetworks@2024-05-01' = {
     ]
   }
 }
+ */

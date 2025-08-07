@@ -33,3 +33,9 @@ az group list --query "[?contains(name, '{keyword}')]" --output table
 ```
 az configure --defaults group="{your resource group name}"
 ```
+
+# Apply what-if command after modified your template file
+
+```
+az deployment group what-if --template-file main.bicep
+```
