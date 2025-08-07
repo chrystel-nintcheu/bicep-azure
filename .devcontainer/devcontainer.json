@@ -16,6 +16,7 @@
                 "ms-azuretools.vscode-azureresourcegroups",
                 "ms-codespaces-tools.ado-codespaces-auth",
                 "ms-azuretools.vscode-containers",
+                "msazurermtools.azurerm-vscode-tools",
                 "redhat.ansible",
                 "ms-python.python"
             ]
